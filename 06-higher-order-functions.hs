@@ -5,7 +5,7 @@ multThree x y z = x * y * z
 -- My solution:
 -- applyTwice :: f -> a -> a
 -- applyTwice function value = function (function value)
--- 
+--
 -- This kind of type signature doesn't really tell the compiler that f is a function, it needs to be explicit
 applyTwice :: (a -> a) -> a -> a
 applyTwice f x = f (f x)
@@ -74,3 +74,18 @@ triangles' = filter sum24 (filter rightTriangle oneToTenTriplets)
     oneToTenTriplets = [ (x, y, z) | x <- [1..10], y <- [1..10], z <- [1..10] ]
     rightTriangle (x, y, z) = x^2 + y^2 == z^2
     sum24 (x, y, z) = x + y + z == 24
+
+-- Let's find the largest number under 100,000 that's divisible by 3829.
+-- (To do that, we'll just filter a set of possibilities in which we know the 
+-- solution lies.)
+--
+-- My solution
+largestDivisible = head (reverse (filter divisible [0..100000]))
+  where divisible x = x `mod` 3829 == 0
+-- Book's solution
+largestDivisible' :: (Integral a) => a
+largestDivisible' = head (filter divisible [100000,99999,..]))
+  where divisible x = x `mod` 3829 == 0
+---
+-- The book's solution is cool becaues it uses one less function, although is
+-- not as nice to read I think.
