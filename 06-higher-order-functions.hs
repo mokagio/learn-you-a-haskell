@@ -1,3 +1,5 @@
+-- http://learnyouahaskell.com/higher-order-functions
+
 multThree :: (Num a) => a -> a -> a -> a
 multThree x y z = x * y * z
 
@@ -84,8 +86,54 @@ largestDivisible = head (reverse (filter divisible [0..100000]))
   where divisible x = x `mod` 3829 == 0
 -- Book's solution
 largestDivisible' :: (Integral a) => a
-largestDivisible' = head (filter divisible [100000,99999,..]))
+largestDivisible' = head (filter divisible [100000,99999..])
   where divisible x = x `mod` 3829 == 0
 ---
 -- The book's solution is cool becaues it uses one less function, although is
 -- not as nice to read I think.
+
+-- Collatz sequences.
+-- We take a natural number. If that number is even, we divide
+-- it by two. If it's odd, we multiply it by 3 and then add 1
+-- to that. We take the resulting number and apply the same
+-- thing to it, which produces a new number and so on. In
+-- essence, we get a chain of numbers. It is thought that for
+-- all starting numbers, the chains finish at the number 1. So
+-- if we take the starting number 13, we get this sequence:
+--
+-- 13, 40, 20, 10, 5, 16, 8, 4, 2, 1.
+--
+-- 13*3 + 1 equals 40. 40 divided by 2 is 20, etc. We see that the chain has 10
+-- terms.
+--
+-- Now what we want to know is this: for all starting numbers between 1 and
+-- 100, how many chains have a length greater than 15?
+--
+--
+-- Since it is said that any sequence finishes with 1, I'm assuming that 1 is
+-- the end condition for the sequecne. Because otherwise we'd get 1*3+1=4,
+-- 4/2=2, 2/2=1, 1*3+1=4, etc...
+--
+-- My solution
+{-
+collatz :: (Integral a) => a -> [a]
+collatz 0 = []
+collatz 1 = []
+collatz x
+  | odd x     = let collatz_odd = x * 3 + 1
+    in [collatz_odd] ++ collatz collatz_odd
+  | otherwise = let collatz_even = x `div` 2
+    in [collatz_even] ++ collatz collatz_even
+-}
+-- I misunderstood the fact that the first element of the sequence is the
+-- number itself, due to a newline.
+-- I also wrongly evaluated the edge case for 1, partly due to the whole first
+-- element mistake.
+-- I'm pretty happy with my use of let though :)
+--
+-- Book's solution
+chain :: (Integral a) => a -> [a]
+chain 1 = [1]
+chain n
+  | odd n = n : chain(n * 3 + 1)
+  | even n = n : chain(n `div` 2)
