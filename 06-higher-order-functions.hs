@@ -149,3 +149,11 @@ chain n
 --
 collatzSolutionsCount = length (filter longerThanFifteen (map chain [1..100]))
   where longerThanFifteen xs = length xs > 15
+
+-- Understainding map for functions with multiple parameters.
+-- 👉 Currying + Partial application
+--
+-- map (*) [0..]
+--
+-- The type of * is Num a => a -> a -> a, mapping this function on a Num a,
+-- would result in a Num a => a -> a.
