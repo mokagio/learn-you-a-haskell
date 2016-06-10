@@ -137,3 +137,15 @@ chain 1 = [1]
 chain n
   | odd n = n : chain(n * 3 + 1)
   | even n = n : chain(n `div` 2)
+
+-- Now that we have the Collatz chain generator, how can we use it to solve
+-- the question?
+--
+-- For all starting numbers between 1 and 100, how many chains have a length
+-- greater than 15?
+--
+-- So... we just learnt about takeWhile, shall we try to use it? Or should we
+-- evaluate all the chains and filter base on the lenght?
+--
+collatzSolutionsCount = length (filter longerThanFifteen (map chain [1..100]))
+  where longerThanFifteen xs = length xs > 15
