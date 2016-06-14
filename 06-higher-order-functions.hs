@@ -157,3 +157,13 @@ collatzSolutionsCount = length (filter longerThanFifteen (map chain [1..100]))
 --
 -- The type of * is Num a => a -> a -> a, mapping this function on a Num a,
 -- would result in a Num a => a -> a.
+--
+-- So map (*) [0..] results in [(0*), (1*), (2*), ...]
+
+-- Lambdas
+--
+-- "Lambdas are basically anonymous functions that are used because we need
+-- some functions only once"
+--
+-- Re-write the collatz solution using a lamda
+collatzSolutionsCount' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
