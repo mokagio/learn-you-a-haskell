@@ -167,3 +167,6 @@ collatzSolutionsCount = length (filter longerThanFifteen (map chain [1..100]))
 --
 -- Re-write the collatz solution using a lamda
 collatzSolutionsCount' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+
+-- If a pattern matching fails in a lambda, a runtime error occurs, so be
+-- careful when pattern matching in lambdas!"
