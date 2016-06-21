@@ -179,8 +179,8 @@ collatzSolutionsCount' = length (filter (\xs -> length xs > 15) (map chain [1..1
 -- b -> a -> c. That is it takes a function that expecting two inputs of type
 -- a and b and returning c, and returns another function with the parameters
 -- flipped.
-flip' :: (a -> b -> c) -> b -> a -> c
-flip' f = \x y -> f y x
+flip''' :: (a -> b -> c) -> b -> a -> c
+flip''' f = \x y -> f y x
 -- I didn't get there by myself, I had to look the answer.
 -- The book says:
 --
@@ -195,3 +195,37 @@ flip' f = \x y -> f y x
 -- This means that means giving y and x, **in that order**, as input to f.
 -- This means that...
 -- I still haven't gotten it :'(
+
+--
+-- folds functions
+--
+
+-- These are easy, they're like Ruby and Swift's `reduce` :D
+
+-- foldl, left fold, "folds the list on the left side". This means that the
+-- binary function is applied between the starting value and the head of the
+-- list.
+--
+-- foldl is exactly (as far as I understand at the moment) like Ruby and
+-- Swift's result.
+
+-- Let's implement sum again, only this time, we'll use a fold instead of
+-- explicit recursion.
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (+) 0 xs
+
+-- Thanks to the power of currying we can write an even more succint version:
+sum'' :: (Num a) => [a] -> a
+sum'' = foldl (+) 0
+-- > Generally, if you have a function like foo a = bar b a,
+-- you can rewrite it as foo = bar b, because of currying.
+
+-- Let's implement elem using a left fold
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' x = foldl (\acc y -> acc || (x == y)) False
+
+--- Book's solution
+elem'' :: (Eq a) => a -> [a] -> Bool
+elem'' y ys = foldl (\acc x -> if x == y then True else acc) False ys
+-- I have a feeling that using if-then instead of doing an OR every time results
+-- in an operation less per iteration.
