@@ -170,3 +170,28 @@ collatzSolutionsCount' = length (filter (\xs -> length xs > 15) (map chain [1..1
 
 -- If a pattern matching fails in a lambda, a runtime error occurs, so be
 -- careful when pattern matching in lambdas!"
+
+-- Implement flip using lambdas without parenthesis
+--
+--    flip :: (a -> b -> c) -> b -> a -> c
+--
+-- flip takes an input of type a -> b -> c, and returns an output of type
+-- b -> a -> c. That is it takes a function that expecting two inputs of type
+-- a and b and returning c, and returns another function with the parameters
+-- flipped.
+flip' :: (a -> b -> c) -> b -> a -> c
+flip' f = \x y -> f y x
+-- I didn't get there by myself, I had to look the answer.
+-- The book says:
+--
+-- So use lambdas in this way when you want to make it
+-- explicit that your function is mainly meant to be partially
+-- applied and passed on to a function as a parameter.
+--
+-- I guess that since the first parameter is `(a -> b -> c)`, it's easy for the
+-- compiler to understand that it is a function that expects two arguments.
+-- The `\x y -> ...` has type signature `t -> u`.
+-- Finally `f y x` means giving y and x, **in that order**, as input to f.
+-- This means that means giving y and x, **in that order**, as input to f.
+-- This means that...
+-- I still haven't gotten it :'(
