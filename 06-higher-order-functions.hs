@@ -229,3 +229,31 @@ elem'' :: (Eq a) => a -> [a] -> Bool
 elem'' y ys = foldl (\acc x -> if x == y then True else acc) False ys
 -- I have a feeling that using if-then instead of doing an OR every time results
 -- in an operation less per iteration.
+
+-- Implement map using a right fold
+map'' :: (a -> b) -> [a] -> [b]
+map'' f xs = foldr (\x acc -> f x : acc) [] xs
+
+-- Implement map using a left fold
+map''' :: (a -> b) -> [a] -> [b]
+map''' f xs = foldl (\acc x -> acc ++ [f x]) [] xs
+
+-- [...] the thing is that the ++ function is much more
+-- expensive than :, so we usually use right folds when we're
+-- building up new lists from a list.
+
+-- One big difference is that right folds work on infinite lists, whereas left
+-- ones don't! To put it plainly, if you take an infinite list at some point
+-- and you fold it up from the right, you'll eventually reach the beginning of
+-- the list. However, if you take an infinite list at a point and you try to
+-- fold it up from the left, you'll never reach an end!
+
+-- Implement sum of list using fold(l|r)1
+sum''' :: (Num a) => [a] -> a
+sum''' xs = foldl1 (+) xs
+-- or using currying and foldr1
+sum'''' :: (Num a) => [a] -> a
+sum'''' = foldr1 (+)
+
+-- Warning! foldl1 and foldr1 throw runtime errors if the list is empty!
+-- Which is obvious as they depend on the list having a starting/eding value.
