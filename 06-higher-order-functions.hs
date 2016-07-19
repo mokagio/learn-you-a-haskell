@@ -257,3 +257,31 @@ sum'''' = foldr1 (+)
 
 -- Warning! foldl1 and foldr1 throw runtime errors if the list is empty!
 -- Which is obvious as they depend on the list having a starting/eding value.
+
+-- Let's reimplement some standar library functoins using folds
+--
+maximum' :: (Ord a) => [a] -> a
+-- maximum' xs = foldl (\acc x -> if acc > x then acc else x) 0 xs
+-- This works bu even as I was writing it I was pondering how I would have
+-- dealt with negative numbers. I should have thought of the 1 versions!
+maximum' = foldr1 (\x acc -> if x > acc then x else acc)
+
+reverse' :: [a] -> [a]
+reverse' = foldl (\acc x -> x : acc) []
+
+product' :: (Num a) => [a] -> a
+-- product' = foldl1 (\acc x -> acc * x)
+-- even better:
+product' = foldl1 (*)
+
+filter''' :: (a -> Bool) -> [a] -> [a]
+filter''' f = foldl (\acc x -> if f x == True then acc ++ [x] else acc) []
+
+head' :: [a] -> a
+head' = foldr1 (\x _ -> x)
+
+last' :: [a] -> a
+last' = foldl1 (\_ x -> x)
+
+-- NEXT TIME:
+-- Another way to picture...
