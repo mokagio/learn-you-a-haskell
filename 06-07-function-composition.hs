@@ -15,3 +15,14 @@
 -- then negate it.
 p :: Num a => [a] -> [a]
 p = map (negate . abs)
+
+-- If you want to rewrite an expression with a lot of parentheses by using
+-- function composition, you can start by putting the last parameter of the
+-- innermost function after a $ and then just composing all the other function
+-- calls, writing them without their last parameter and putting dots between
+-- them.
+--
+-- Rewrite using function composition and application:
+-- replicate 100 (product (map (*3) (zipWith max [1,2,3,4,5] [4,5,6,7,8])))
+--
+rewrite 100 . product . map (*3) . zipWith max [1,2,3,4,5] $ [4,5,6,7,8]
