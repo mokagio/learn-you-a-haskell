@@ -38,3 +38,23 @@ fn  = ceiling . negate . tan . cos . max 50
 -- results in instead of thinking about data and how it's shuffled around.
 -- You can take simple functions and use composition as glue to form more
 -- complex functions.
+--
+-- However, many times, writing a function in point free style can be less
+-- readable if a function is too complex. That's why making long chains of
+-- function composition is discouraged. The prefered style is to use let
+-- bindings to give labels to intermediary results or split the problem into
+-- sub-problems and then put it together so that the function makes sense to
+-- someone reading it instead of just making a huge composition chain.
+
+oddSquareSumMap :: Integer
+oddSquareSumMap =  sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
+
+oddSquareSumComposition :: Integer
+oddSquareSumComposition = sum . takeWhile (<10000) . filter odd . map (^2) $ [1..]
+
+-- let can help readability
+oddSquareSumLet :: Integer
+oddSquareSumLet =
+  let oddSquares = filter odd (map (^2) [1..])
+      lessThan1000 = takeWhile (<10000) oddSquares
+  in sum lessThan1000
