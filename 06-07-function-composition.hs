@@ -25,13 +25,13 @@ p = map (negate . abs)
 -- Rewrite using function composition and application:
 -- replicate 100 (product (map (*3) (zipWith max [1,2,3,4,5] [4,5,6,7,8])))
 --
-rewrite 100 . product . map (*3) . zipWith max [1,2,3,4,5] $ [4,5,6,7,8]
+_ = replicate 100 . product . map (*3) . zipWith max [1,2,3,4,5] $ [4,5,6,7,8]
 
 -- Point free style
 --
 -- Rewrite using point free style
 -- fn x = ceiling (negate (tan (cos (max 50 x))))
-fn = ceiling . nagate . tan . cos . max 50
+fn  = ceiling . negate . tan . cos . max 50
 
 -- Many times, a point free style is more readable and concise, because it
 -- makes you think about functions and what kind of functions composing them
