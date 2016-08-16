@@ -31,5 +31,20 @@ spanned = span (<4) [1..10]
 -- break
 broken = break (==4) [1..10]
 
--- Next time:
--- inits and tails are like init and tail...
+-- Use a fold to implement searching a list for a sublist
+--
+-- I had to look at the solution for this one...
+search :: (Eq a) => [a] -> [a] -> Bool
+search sublist list =
+  let targetLength = length list
+  in foldl (\acc x -> if take targetLength x == sublist then True else acc) False (tails list)
+-- What this does is that it uses tails to create a list of list, with each
+-- element being the full list minus n starting elements, where n is the index
+-- of the element: [['a', 'b', 'c'], ['b', 'c'], ['c'], []].  We can then
+-- "scan" the list by folding this list of list, which is like moving a cursor
+-- on the original list, starting from index 0. In the fold we can see if the
+-- first m elements, where m is the length of the sublist we're looking for,
+-- match the sublist.  The fold starts with accumulator False and sets it to
+-- true only if a match is found, otherwise it sets it as its previous value.
+-- This also makes so that once a match is found, the value True is not lost in
+-- the fold.
