@@ -48,3 +48,12 @@ search sublist list =
 -- true only if a match is found, otherwise it sets it as its previous value.
 -- This also makes so that once a match is found, the value True is not lost in
 -- the fold.
+
+-- The behaviour of this `search` function we wrote is actually the same as
+-- `isInfixOf`
+_ = isInfixOf "pizza" "I love pizza"
+
+-- There are also `isPrefixOf` and `isSuffixOf`.
+
+-- `unlines` is pretty cool
+joinedMultilineString = unlines ["a", "b", "c"]
